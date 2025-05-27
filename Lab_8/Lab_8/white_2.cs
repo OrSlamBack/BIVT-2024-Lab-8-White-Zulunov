@@ -1,0 +1,116 @@
+﻿using System;
+using System.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.ComponentModel;
+
+
+namespace Lab_8
+{
+    class White_2 : White
+    {
+        private int [,] array;
+
+        public int [,] Output => array;
+
+        public White_2(string input) : base(input) { }
+
+        public override void Review()
+        {
+                int MaxSyllables = 0;
+                array = new int[0 , 0];
+                if (Input == null)
+                {
+                    return;
+                }
+                
+                {
+                    bool word = false;
+                    int syllables = 0;
+                    foreach (char c in Input)
+                    {
+                        if (IsWordChar(c))
+                        {
+                            word = true;
+                            if (IsVowel(c)) syllables++;
+                        }
+                        else
+                        {
+                            if (syllables == 0 && word) syllables = 1;
+                            MaxSyllables = Math.Max(MaxSyllables, syllables);
+                            syllables = 0;
+                            word = false;
+                        }
+                    }
+                    MaxSyllables = Math.Max(MaxSyllables, syllables);
+                }
+                array = new int[MaxSyllables,2];
+                for(int i = 0;i < MaxSyllables; i++)
+                {
+                    array[i , 0] = i + 1;
+                }
+
+                {
+                    bool word = false;
+                    int syllables = 0;
+                    foreach (char c in Input)
+                    {
+                        if (IsWordChar(c))
+                        {
+                            word = true;
+                            if (IsVowel(c)) syllables++;
+                        }
+                        else
+                        {
+                            if (word)
+                            {
+                                if (syllables == 0) syllables = 1;
+                                if (syllables > 0) array[syllables - 1, 1]++;
+                            }
+                            syllables = 0;
+                            word = false;
+                        }
+                    }
+                    if(word)
+                    {
+                        if (syllables == 0) syllables = 1;
+                        if (syllables > 0) array[syllables - 1, 1]++;
+                    }
+                }
+                int n = 0;
+                for(int i = 0;i < MaxSyllables; i++)
+                {
+                    if (array[i, 1] > 0) { n++; }
+                }
+                int[,] t = new int[n, 2];
+                int j = 0;
+                for (int i = 0; i < MaxSyllables; i++) 
+                {
+                    if (array[i, 1] > 0) 
+                    {
+                        t[j, 0] = array[i, 0];
+                        t[j, 1] = array[i, 1];
+                        j++;
+                    }
+                }
+                array = t;
+        }
+        public override string ToString()
+        {
+            string res = "";
+            if(array == null)
+            {
+                return res;
+            }
+            for (int i = 0; i < array.GetLength(0); i++) {
+                if (i < array.GetLength(0) - 1) res = res + array[i, 0].ToString() + " - " + array[i, 1].ToString() + Environment.NewLine;
+                else res = res + array[i, 0].ToString() + " - " + array[i, 1].ToString();
+            }
+            return res; 
+        }
+
+    }
+}
