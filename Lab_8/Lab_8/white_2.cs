@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Lab_8
 {
-    class White_2 : White
+    public class White_2 : White
     {
         private int [,] array;
 
@@ -29,23 +29,36 @@ namespace Lab_8
                 
                 {
                     bool word = false;
+                    bool number = false;
                     int syllables = 0;
                     foreach (char c in Input)
                     {
-                        if (IsWordChar(c))
+                        if (IsWordChar(c) || c >= '0' &&  c<='9')
                         {
+                            if(c >= '0' && c <= '9')
+                            {
+                                number = true;
+                            }
                             word = true;
                             if (IsVowel(c)) syllables++;
                         }
                         else
                         {
                             if (syllables == 0 && word) syllables = 1;
-                            MaxSyllables = Math.Max(MaxSyllables, syllables);
+                            if(!number)MaxSyllables = Math.Max(MaxSyllables, syllables);
                             syllables = 0;
                             word = false;
+                            number = false;
                         }
                     }
-                    MaxSyllables = Math.Max(MaxSyllables, syllables);
+                    if (word)
+                    {
+                        if(syllables == 0)
+                        {
+                            syllables = 1;
+                        }
+                        if(!number)MaxSyllables = Math.Max(MaxSyllables, syllables);
+                    }
                 }
                 array = new int[MaxSyllables,2];
                 for(int i = 0;i < MaxSyllables; i++)
@@ -56,25 +69,31 @@ namespace Lab_8
                 {
                     bool word = false;
                     int syllables = 0;
+                    bool number = false;
                     foreach (char c in Input)
                     {
-                        if (IsWordChar(c))
+                        if (IsWordChar(c) || c >= '0' && c <= '9')
                         {
+                            if (c >= '0' && c <= '9')
+                            {
+                                number = true;
+                            }
                             word = true;
                             if (IsVowel(c)) syllables++;
                         }
                         else
                         {
-                            if (word)
+                            if (word && !number)
                             {
                                 if (syllables == 0) syllables = 1;
                                 if (syllables > 0) array[syllables - 1, 1]++;
                             }
                             syllables = 0;
                             word = false;
+                            number = false;
                         }
                     }
-                    if(word)
+                    if(word && !number)
                     {
                         if (syllables == 0) syllables = 1;
                         if (syllables > 0) array[syllables - 1, 1]++;
