@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lab_8
 {
-    class White_1 : White
+    public class White_1 : White
     {
         private int answer;
 
@@ -38,10 +38,10 @@ namespace Lab_8
                 else
                 {
                     word = false;
-                }
-                if (IsPunctuation(c))
-                {
-                    answer++;
+                    if (IsPunctuation(c))
+                    {
+                        answer++;
+                    }
                 }
             }
 
