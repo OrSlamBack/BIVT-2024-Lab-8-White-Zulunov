@@ -25,24 +25,34 @@ namespace Lab_8
                 return;
             }
             bool word = false;
+            bool number = false;
             foreach (char c in Input)
             {
-                if (IsWordChar(c)) 
+                if (IsWordChar(c) || (c>='0' && c <= '9')) 
                 {
-                    if(word == false)
+                    if(c>='0' && c<='9')
                     {
-                        answer++;
+                        number = true;
                     }
                     word = true;
                 }
                 else
                 {
+                    if (!number && word)
+                    {
+                        answer ++;
+                    }
+                    number = false;
                     word = false;
                     if (IsPunctuation(c))
                     {
                         answer++;
                     }
                 }
+            }
+            if (word && !number) 
+            { 
+                answer ++;
             }
 
         }
