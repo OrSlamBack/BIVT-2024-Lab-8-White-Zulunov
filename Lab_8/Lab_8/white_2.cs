@@ -14,7 +14,33 @@ namespace Lab_8
     {
         private int [,] array;
 
-        public int [,] Output => array;
+        public int [,] Output
+        {
+            get
+            {
+                int n, m;
+                if (array == null)
+                {
+                    n = 0;
+                    m = 0;
+                }
+                else
+                {
+                    n = array.GetLength(0);
+                    m = array.GetLength(1);
+                }
+                int[,] _array = new int[n, m];
+                for(int i = 0;i < n; i++)
+                {
+                    for(int j = 0;j < m; j++)
+                    {
+                        _array[i,j] = array[i, j];
+                    }
+                }
+
+                return _array;
+            }
+        }
 
         public White_2(string input) : base(input) { }
 
@@ -133,3 +159,4 @@ namespace Lab_8
 
     }
 }
+
