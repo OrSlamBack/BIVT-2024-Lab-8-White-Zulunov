@@ -21,14 +21,10 @@ namespace Lab_8
                 int n, m;
                 if (array == null)
                 {
-                    n = 0;
-                    m = 0;
+                    return null;
                 }
-                else
-                {
-                    n = array.GetLength(0);
-                    m = array.GetLength(1);
-                }
+                n = array.GetLength(0);
+                m = array.GetLength(1);
                 int[,] _array = new int[n, m];
                 for(int i = 0;i < n; i++)
                 {
